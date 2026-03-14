@@ -1,0 +1,2 @@
+ALTER TABLE accomodations
+    ADD COLUMN booked BOOLEAN NOT NULL DEFAULT FALSE;
