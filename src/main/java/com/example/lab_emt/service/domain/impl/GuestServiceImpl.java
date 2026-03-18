@@ -2,6 +2,7 @@ package com.example.lab_emt.service.domain.impl;
 
 import com.example.lab_emt.model.domain.Guest;
 import com.example.lab_emt.model.domain.Host;
+import com.example.lab_emt.model.exception.HostNotFoundException;
 import com.example.lab_emt.repository.GuestRepository;
 import com.example.lab_emt.service.domain.GuestService;
 import com.example.lab_emt.service.domain.HostService;
@@ -58,9 +59,12 @@ public class GuestServiceImpl implements GuestService {
     @Transactional
     public Optional<Guest> addGuestToHost(Long guest_id, Long host_id) {
         return findById(guest_id).map(g -> {
-            Optional<Host> host = hostService.findById(host_id);
-            host.ifPresent(h -> g.getHosts().add(h));
-            host.ifPresent(h -> h.getGuests().add(g));
+            Host host = hostService
+                    .findById(host_id)
+                    .orElseThrow(() -> new HostNotFoundException(host_id));
+            g.getHosts().add(host);
+            host.getGuests().add(g);
+
             return g;
         });
     }

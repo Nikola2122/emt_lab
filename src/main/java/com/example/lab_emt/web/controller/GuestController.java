@@ -5,6 +5,7 @@ import com.example.lab_emt.model.dto.RequestGuestDto;
 import com.example.lab_emt.model.dto.ResponseAccommodationDto;
 import com.example.lab_emt.model.dto.ResponseGuestDto;
 import com.example.lab_emt.service.application.GuestApplicationService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,15 @@ public class GuestController {
     ) {
         return guestApplicationService
                 .addGuestToHost(guest_id, host_id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @Transactional
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<ResponseGuestDto> deleteById(@PathVariable Long id) {
+        return guestApplicationService
+                .deleteById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
