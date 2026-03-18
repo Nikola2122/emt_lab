@@ -6,6 +6,7 @@ import com.example.lab_emt.model.dto.ResponseGuestDto;
 import com.example.lab_emt.repository.GuestRepository;
 import com.example.lab_emt.service.application.GuestApplicationService;
 import com.example.lab_emt.service.domain.GuestService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,6 +48,7 @@ public class GuestApplicationServiceImpl implements GuestApplicationService {
     }
 
     @Override
+    @Transactional
     public Optional<ResponseGuestDto> deleteById(Long id) {
         return guestService.deleteById(id).map(ResponseGuestDto::from);
     }

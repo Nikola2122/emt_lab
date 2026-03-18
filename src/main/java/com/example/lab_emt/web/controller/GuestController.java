@@ -43,7 +43,6 @@ public class GuestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @Transactional
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ResponseGuestDto> deleteById(@PathVariable Long id) {
         return guestApplicationService
