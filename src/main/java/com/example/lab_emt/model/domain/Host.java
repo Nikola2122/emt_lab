@@ -1,12 +1,11 @@
 package com.example.lab_emt.model.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,6 +17,10 @@ public class Host extends BaseAuditableEntity{
     private String name;
 
     private String surname;
+
+
+    @ManyToMany(mappedBy = "hosts")
+    private List<Guest> guests;
 
     @ManyToOne
     @JoinColumn(name = "country_id", nullable = false)
