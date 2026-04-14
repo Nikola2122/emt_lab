@@ -22,7 +22,7 @@ public class Host extends BaseAuditableEntity{
     @ManyToMany(mappedBy = "hosts")
     private List<Guest> guests;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", nullable = false)
     private Country country;
 }

@@ -11,6 +11,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Table(name = "accommodations")
+@NamedEntityGraph(
+        name = "accommodation-entity-graph",
+        attributeNodes = {
+                @NamedAttributeNode(value = "host", subgraph = "host-subgraph"),
+        },
+        subgraphs = {
+                @NamedSubgraph(
+                        name = "host-subgraph",
+                        attributeNodes = {
+                                @NamedAttributeNode("country")
+                        }
+                )
+        }
+)
 public class Accommodation extends BaseAuditableEntity{
 
     private String name;
@@ -18,7 +32,7 @@ public class Accommodation extends BaseAuditableEntity{
     @Enumerated(EnumType.STRING)
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "host_id")
     private Host host;
 

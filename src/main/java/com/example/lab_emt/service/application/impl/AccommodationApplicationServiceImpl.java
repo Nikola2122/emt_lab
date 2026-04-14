@@ -1,12 +1,16 @@
 package com.example.lab_emt.service.application.impl;
 
 import com.example.lab_emt.model.domain.Host;
+import com.example.lab_emt.model.dto.PagedAccRequestDto;
 import com.example.lab_emt.model.dto.RequestAccommodationDto;
 import com.example.lab_emt.model.dto.ResponseAccommodationDto;
+import com.example.lab_emt.model.enums.Category;
 import com.example.lab_emt.model.exception.HostNotFoundException;
+import com.example.lab_emt.model.projection.DetailedAccProjection;
 import com.example.lab_emt.service.application.AccommodationApplicationService;
 import com.example.lab_emt.service.domain.AccommodationService;
 import com.example.lab_emt.service.domain.HostService;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +31,12 @@ public class AccommodationApplicationServiceImpl implements AccommodationApplica
     public Optional<ResponseAccommodationDto> findById(Long id) {
         return accommodationService
                 .findById(id)
+                .map(ResponseAccommodationDto::from);
+    }
+
+    @Override
+    public Optional<ResponseAccommodationDto> findByIdEntityGraph(Long id) {
+        return accommodationService.findByIdEntityGraph(id)
                 .map(ResponseAccommodationDto::from);
     }
 
@@ -66,5 +76,19 @@ public class AccommodationApplicationServiceImpl implements AccommodationApplica
         return accommodationService
                 .book(id)
                 .map(ResponseAccommodationDto::from);
+    }
+
+    @Override
+    public Page<ResponseAccommodationDto> findAllPaged(PagedAccRequestDto requestDto) {
+        return accommodationService.findPaged(requestDto.category(),
+                        requestDto.hostId(),
+                        requestDto.countryId(), requestDto.numRooms(), requestDto.booked(), requestDto.pageNum(),
+                        requestDto.pageSize())
+                .map(ResponseAccommodationDto::from);
+    }
+
+    @Override
+    public List<DetailedAccProjection> findDetailedProjection() {
+        return accommodationService.findDetailedProjection();
     }
 }
