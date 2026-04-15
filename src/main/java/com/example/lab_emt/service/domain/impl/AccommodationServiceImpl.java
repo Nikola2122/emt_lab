@@ -90,12 +90,12 @@ public class AccommodationServiceImpl implements AccommodationService {
                 acc.setBooked(true);
                 acc.setNumRooms(acc.getNumRooms() - 1);
                 applicationEventPublisher.publishEvent(
-                        new BookEvent(acc.getName(), LocalDateTime.now(), true, acc.getNumRooms() == 0)
+                        new BookEvent(acc.getName(), LocalDateTime.now(), true, acc.getNumRooms() == 0, acc.getId(), acc.getHost().getId())
                 );
             }
             else {
                 applicationEventPublisher.publishEvent(
-                        new BookEvent(acc.getName(), LocalDateTime.now(), false, acc.getNumRooms() == 0)
+                        new BookEvent(acc.getName(), LocalDateTime.now(), false, acc.getNumRooms() == 0, acc.getId(), acc.getHost().getId())
                 );
                 throw new AccNotBookableException(id);
             }

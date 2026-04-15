@@ -1,5 +1,7 @@
 package com.example.lab_emt.model.activities;
 
+import com.example.lab_emt.model.domain.Accommodation;
+import com.example.lab_emt.model.domain.Host;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,10 +23,18 @@ public class BookingActivity {
     Boolean successful;
     Boolean fullRoom;
 
-    public BookingActivity(String accName, LocalDateTime bookTime, Boolean successful, Boolean full) {
+    @ManyToOne
+    Accommodation accommodation;
+
+    @ManyToOne
+    Host host;
+
+    public BookingActivity(String accName, LocalDateTime bookTime, Boolean successful, Boolean full, Accommodation accommodation, Host host) {
         this.accName = accName;
         this.bookTime = bookTime;
         this.successful = successful;
         this.fullRoom = full;
+        this.accommodation = accommodation;
+        this.host = host;
     }
 }

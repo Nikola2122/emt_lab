@@ -1,6 +1,8 @@
 package com.example.lab_emt.service.domain.impl;
 
 import com.example.lab_emt.model.activities.BookingActivity;
+import com.example.lab_emt.model.dto.MostPopularAccProjection;
+import com.example.lab_emt.model.dto.MostPopularHostProjection;
 import com.example.lab_emt.repository.BookingActivityRepository;
 import com.example.lab_emt.service.domain.BookingActivityService;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,5 +31,15 @@ public class BookingActivityServiceImpl implements BookingActivityService {
     public Page<BookingActivity> findAll(int page, int size, String sortBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
         return bookingActivityRepository.findAll(pageable);
+    }
+
+    @Override
+    public MostPopularAccProjection mostPopularAcc() {
+        return bookingActivityRepository.mostPopularAcc();
+    }
+
+    @Override
+    public MostPopularHostProjection mostPopularHost() {
+        return bookingActivityRepository.mostPopularHost();
     }
 }

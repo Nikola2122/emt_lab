@@ -1,7 +1,6 @@
 package com.example.lab_emt.model.dto;
 
 import com.example.lab_emt.model.activities.BookingActivity;
-import com.example.lab_emt.model.views.AccommodationView;
 
 import java.time.LocalDateTime;
 import java.util.List;
