@@ -19,7 +19,7 @@ public class DataInitializerForAdminUser {
 
     @PostConstruct
     public void init(){
-        if(userRepository.findByUsername("admin@admin.cm").isEmpty()){
+        if(userRepository.findByUsername("admin").isEmpty()){
             User admin = new User(
                     "Nikola",
                     "Koka",
