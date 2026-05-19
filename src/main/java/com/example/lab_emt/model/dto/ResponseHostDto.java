@@ -10,14 +10,16 @@ public record ResponseHostDto(
         Long id,
         String name,
         String surname,
-        String countryName
+        String countryName,
+        Long countryId
 ) {
     public static ResponseHostDto from(Host host) {
         return new ResponseHostDto(
                 host.getId(),
                 host.getName(),
                 host.getSurname(),
-                host.getCountry().getName()
+                host.getCountry().getName(),
+                host.getCountry().getId()
         );
     }
 

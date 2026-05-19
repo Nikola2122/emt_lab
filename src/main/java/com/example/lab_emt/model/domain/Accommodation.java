@@ -50,6 +50,5 @@ public class Accommodation extends BaseAuditableEntity{
         this.state = state;
         this.numRooms = numRooms;
         this.booked = booked;
-
     }
 }

@@ -1,12 +1,13 @@
 package com.example.lab_emt.web.controller;
 
+import com.example.lab_emt.model.dto.RequestCountryDto;
+import com.example.lab_emt.model.dto.RequestHostDto;
+import com.example.lab_emt.model.dto.ResponseCountryDto;
 import com.example.lab_emt.model.dto.ResponseHostDto;
 import com.example.lab_emt.service.application.HostApplicationService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,5 +30,29 @@ public class HostController {
     @GetMapping()
     public ResponseEntity<List<ResponseHostDto>> findAll() {
         return ResponseEntity.ok(hostApplicationService.findAll());
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<ResponseHostDto> create(@RequestBody @Valid RequestHostDto requestHostDto) {
+        return ResponseEntity.ok(hostApplicationService.create(requestHostDto));
+    }
+
+    @PutMapping("/{id}/edit")
+    public ResponseEntity<ResponseHostDto> update(
+            @PathVariable Long id,
+            @Valid @RequestBody RequestHostDto requestHostDto
+    ) {
+        return hostApplicationService
+                .update(id, requestHostDto)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<ResponseHostDto> deleteById(@PathVariable Long id) {
+        return hostApplicationService
+                .deleteById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

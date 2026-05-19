@@ -16,4 +16,9 @@ public class Country extends BaseEntity{
     private String name;
 
     private String continent;
+
+    public Country(String name, String continent) {
+        this.name = name;
+        this.continent = continent;
+    }
 }

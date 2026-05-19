@@ -51,7 +51,6 @@ public class AccommodationApplicationServiceImpl implements AccommodationApplica
                 .findById(requestAccommodationDto.hostId())
                 .orElseThrow(() -> new HostNotFoundException(requestAccommodationDto.hostId()));
         return ResponseAccommodationDto.from(accommodationService.create(requestAccommodationDto.toAccommodation(host)));
-
     }
 
     @Override
